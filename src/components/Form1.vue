@@ -1,62 +1,35 @@
 <template>
   <div class="ui centered card">
-    <h1 class="ui header">Page 1</h1>
+    <h1 class="ui header">Subscription</h1>
 
     <div class="content">
       <div class="ui form">
-        <!-- Store info -->
-        <fieldset class="ui segment fields">
-          <div class="field">
-            <label>Store Type</label>
-            <select v-model="storeType">
-              <option
-                v-for="(option, index) in storeTypes"
-                :key="index"
-                :value="option"
-              >
-                {{ option }}
-              </option>
-            </select>
-            <div class="ui pointing red basic label" v-show="errors['storeType']">
-              {{ errors['storeType'] }}
-            </div>
-          </div>
-
-          <div class="field" v-show="storeType === 'Metro'">
-            <label>Store Detail</label>
-            <input type="text" v-model="storeDetail">
-            <div class="ui pointing red basic label" v-show="errors['storeDetail']">
-              {{ errors['storeDetail'] }}
-            </div>
-          </div>
-        </fieldset>
-
         <!-- User info -->
         <fieldset class="ui segment fields">
           <div class="field">
-            <label>Name lookup</label>
+            <label>Sid</label>
             <autocomplete
               :items="users"
               @change="onFullNameSelected"
             ></autocomplete>
-            <div class="ui pointing red basic label" v-show="errors['fullName']">
-              {{ errors['fullName'] }}
+            <div class="ui pointing red basic label" v-show="errors['sid']">
+              {{ errors['sid'] }}
             </div>
           </div>
 
           <div class="field">
-            <label>First Name</label>
-            <input type="text" v-model="firstName">
-            <div class="ui pointing red basic label" v-show="errors['firstName']">
-              {{ errors['firstName'] }}
+            <label>Number</label>
+            <input type="number" v-model="number">
+            <div class="ui pointing red basic label" v-show="errors['number']">
+              {{ errors['number'] }}
             </div>
           </div>
 
           <div class="field">
-            <label>Last Name</label>
-            <input type="text" v-model="lastName">
-            <div class="ui pointing red basic label" v-show="errors['lastName']">
-              {{ errors['lastName'] }}
+            <label>Email</label>
+            <input type="text" v-model="email">
+            <div class="ui pointing red basic label" v-show="errors['email']">
+              {{ errors['email'] }}
             </div>
           </div>
         </fieldset>
@@ -83,26 +56,12 @@ export default {
     Autocomplete,
   },
 
-  data() {
-    return {
-      storeTypes: [
-        'Mall',
-        'Metro',
-        'Arcade',
-        'Centre',
-      ],
-      users: [],
-      errors: {},       // for form validation
-    };
-  },
 
   computed: {
     ...mapFields([
-      'form.storeType',
-      'form.storeDetail',
-      'form.fullName',
-      'form.firstName',
-      'form.lastName',
+      'form.sid',
+      'form.email',
+      'form.number',
     ]),
   },
 
@@ -110,7 +69,7 @@ export default {
     fetch('https://randomuser.me/api/?results=50&nat=au&exc=login')
       .then(res => res.json())
       .then(res => {
-        this.users = res.results.map(u => `${u.name.first} ${u.name.last}`);
+          this.users = res.results.map(u => `${u.name.first} ${u.name.last}`);
       })
       .catch(() => {});
   },
@@ -131,24 +90,16 @@ export default {
     validateForm() {
       this.errors = [];
 
-      if (!this.storeType) {
-        this.errors['storeType'] = 'Store type is required';
-      }
-
-      if (this.storeType === 'Metro' && this.storeDetail.trim() === '') {
-        this.errors['storeDetail'] = 'Store details are required for Metro type';
-      }
-
       if (!this.fullName) {
-        this.errors['fullName'] = 'Full name is required';
+        this.errors['sid'] = 'SID is required';
       }
 
       if (!this.firstName) {
-        this.errors['firstName'] = 'First name is required';
+        this.errors['number'] = 'A number is required';
       }
 
       if (!this.lastName) {
-        this.errors['lastName'] = 'Last name is required';
+        this.errors['email'] = 'Email is required';
       }
 
       return Object.keys(this.errors).length === 0;
