@@ -26,11 +26,11 @@
     "@vue/test-utils": "^1.0.0-beta.25",
     "babel-core": "^7.0.0-bridge",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^24.8.0",
     "eslint": "^5.8.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-vue": "^5.0.0-0",
-    "jest": "^23.6.0",
+    "jest": "^24.8.0",
     "vue-jest": "^3.0.0",
     "vue-template-compiler": "^2.5.17"
   },
@@ -39,6 +39,9 @@
     "env": {
       "node": true,
       "jest": true
+    },
+    "scripts": {
+      "start": "node main.js"
     },
     "extends": [
       "plugin:vue/essential",
