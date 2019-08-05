@@ -15,9 +15,11 @@ Vue.config.productionTip = false;
 const store = new Vuex.Store({
   state: {
     form: {
-      sid: '',
-      email: '',
-      number: '',
+      firstName: '',
+      lastName: '',
+      joinDate: '',
+      isLocatedInVic: null,
+      locationInVic: '',
     },
   },
   getters: {

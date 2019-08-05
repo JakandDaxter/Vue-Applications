@@ -4,34 +4,26 @@
 
     <div class="content">
       <div class="ui form">
+
         <!-- User info -->
         <fieldset class="ui segment fields">
+
           <div class="field">
-            <label>Sid</label>
-            <autocomplete
-              :items="users"
-              @change="onFullNameSelected"
-            ></autocomplete>
-            <div class="ui pointing red basic label" v-show="errors['sid']">
-              {{ errors['sid'] }}
+            <label>First Name</label>
+            <input type="text" v-model="firstName">
+            <div class="ui pointing red basic label" v-show="errors['firstName']">
+              {{ errors['firstName'] }}
             </div>
           </div>
 
           <div class="field">
-            <label>Number</label>
-            <input type="number" v-model="number">
-            <div class="ui pointing red basic label" v-show="errors['number']">
-              {{ errors['number'] }}
+            <label>Last Name</label>
+            <input type="text" v-model="lastName">
+            <div class="ui pointing red basic label" v-show="errors['lastName']">
+              {{ errors['lastName'] }}
             </div>
           </div>
-
-          <div class="field">
-            <label>Email</label>
-            <input type="text" v-model="email">
-            <div class="ui pointing red basic label" v-show="errors['email']">
-              {{ errors['email'] }}
-            </div>
-          </div>
+              
         </fieldset>
 
         <div class="ui buttons">
@@ -48,6 +40,7 @@
 </template>
 
 <script>
+              
 import Autocomplete from './Autocomplete';
 import { mapFields } from 'vuex-map-fields';
 
@@ -56,23 +49,20 @@ export default {
     Autocomplete,
   },
 
+  data() {
+    return {
+      users: [],
+      errors: {},       // for form validation
+    };
+  },
 
   computed: {
     ...mapFields([
-      'form.sid',
-      'form.email',
-      'form.number',
+      'form.fullName',
+      'form.firstName',
     ]),
   },
 
-  mounted() {
-    fetch('https://randomuser.me/api/?results=50&nat=au&exc=login')
-      .then(res => res.json())
-      .then(res => {
-          this.users = res.results.map(u => `${u.name.first} ${u.name.last}`);
-      })
-      .catch(() => {});
-  },
 
   methods: {
     next() {
@@ -81,25 +71,18 @@ export default {
       }
     },
 
-    onFullNameSelected(name) {
-      this.fullName = name;
-      [this.firstName, this.lastName] = name.split(' ', 2);
-    },
 
     // Validate form and return true if everything is ok
     validateForm() {
       this.errors = [];
 
-      if (!this.fullName) {
-        this.errors['sid'] = 'SID is required';
-      }
 
       if (!this.firstName) {
-        this.errors['number'] = 'A number is required';
+        this.errors['firstName'] = 'First name is required';
       }
 
       if (!this.lastName) {
-        this.errors['email'] = 'Email is required';
+        this.errors['lastName'] = 'Last name is required';
       }
 
       return Object.keys(this.errors).length === 0;
