@@ -1,0 +1,66 @@
+//Code here//
+
+
+<form id="demo">
+  <!-- text -->
+  <p>
+  <label>SID</label>
+    <input type="text" v-model="form.sid">
+    {{form.sid}}
+  </p>
+  
+    <p>
+    <label>seeMeNumber</label>
+    <select
+      id="number"
+      v-model="form.number"
+      name="number"
+    >
+      <option>394628</option>
+      <option>957628</option>
+      <option>473893</option>
+    </select>
+  </p>
+  
+    <p>
+    <label for="email">Email Address</label>
+    <input type="text" v-model="form.email">
+    {{form.email}}
+  </p>
+  
+<button class="btn btn-primary btn-lg btn-block" type="submit" @click.prevent="submitForm()">SUBMIT</button>
+
+  <!-- checkbox -->
+  <p><pre>data: {{$data | json 2}}</pre></p>
+  
+    
+</form>
+
+///////////////
+new Vue({
+  el: '#demo',
+  data: {
+  	
+  form :{
+    sid      : '',
+    number   : '',
+    email   : '',
+    regemail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
+    regNumber: /^[0-9]{1,6}$/,
+    regsid: /[a-zA-Z][0-9]{1,6}$/
+},
+  },
+  methods: {
+     
+     submitForm () {
+
+       alert('formValidated');
+       alert(JSON.stringify(this.form));
+       //submit form to backend       
+        },
+   isEmailValid: function() {
+      return (this.email == "")? "" : (this.regemail.test(this.email)) ? 'has-success' : 'has-error';
+    }
+        }
+
+});
